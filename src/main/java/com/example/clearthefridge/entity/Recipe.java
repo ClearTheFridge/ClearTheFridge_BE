@@ -2,11 +2,17 @@ package com.example.clearthefridge.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
 @Table(name = "recipes")
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Recipe {
 
     @Id
