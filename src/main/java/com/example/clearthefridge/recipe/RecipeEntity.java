@@ -1,2 +1,4 @@
-package com.example.clearthefridge.recipe;public class RecipeEntity {
+package com.example.clearthefridge.recipe;
+
+public class RecipeEntity {
 }
