@@ -1,18 +1,19 @@
-package com.example.clearthefridge.service.impl;
+package com.example.clearthefridge.userIngredient.service.impl;
 
 
-import com.example.clearthefridge.dto.Ingredient.AddRequestDto;
-import com.example.clearthefridge.dto.Ingredient.GetResponseDto;
-import com.example.clearthefridge.entity.Ingredient;
-import com.example.clearthefridge.entity.User;
-import com.example.clearthefridge.entity.UserIngredient;
+import com.example.clearthefridge.user.entity.User;
+import com.example.clearthefridge.userIngredient.dto.AddRequestDto;
+import com.example.clearthefridge.userIngredient.dto.GetResponseDto;
+import com.example.clearthefridge.userIngredient.entity.UserIngredient;
 import com.example.clearthefridge.global.exception.CustomException;
 import com.example.clearthefridge.global.exception.ErrorCode;
-import com.example.clearthefridge.repository.IngredientRepository;
-import com.example.clearthefridge.repository.UserIngredientRepository;
-import com.example.clearthefridge.repository.UserRepository;
-import com.example.clearthefridge.service.UserIngredientService;
+import com.example.clearthefridge.ingredient.repository.IngredientRepository;
+import com.example.clearthefridge.user.UserRepository;
+import com.example.clearthefridge.ingredient.entity.Ingredient;
+import com.example.clearthefridge.userIngredient.repository.UserIngredientRepository;
+import com.example.clearthefridge.userIngredient.service.UserIngredientService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Slf4j
 public class UserIngredientServiceImpl implements UserIngredientService {
 
     private final UserIngredientRepository userIngredientRepository;
@@ -46,5 +47,25 @@ public class UserIngredientServiceImpl implements UserIngredientService {
             UserIngredient userIngredient = dto.toEntity(user, ingredient);
             userIngredientRepository.save(userIngredient);
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public GetResponseDto getUserIngredients(Long userId) {
+        log.info("userId = " + userId);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUNT_USER));
+
+        List<UserIngredient> userIngredients = userIngredientRepository.findByUser(user);
+
+        List<GetResponseDto.UserIngredientDto> ingredientDtos = userIngredients.stream()
+                .map(GetResponseDto.UserIngredientDto::from)
+                .collect(Collectors.toList());
+
+        return GetResponseDto.builder()
+                .userId(userId)
+                .ingredientList(ingredientDtos)
+                .build();
     }
 }

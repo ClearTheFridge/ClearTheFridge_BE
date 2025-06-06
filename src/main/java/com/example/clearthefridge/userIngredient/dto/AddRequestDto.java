@@ -1,8 +1,8 @@
-package com.example.clearthefridge.dto.Ingredient;
+package com.example.clearthefridge.userIngredient.dto;
 
-import com.example.clearthefridge.entity.Ingredient;
-import com.example.clearthefridge.entity.User;
-import com.example.clearthefridge.entity.UserIngredient;
+import com.example.clearthefridge.ingredient.entity.Ingredient;
+import com.example.clearthefridge.user.entity.User;
+import com.example.clearthefridge.userIngredient.entity.UserIngredient;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
