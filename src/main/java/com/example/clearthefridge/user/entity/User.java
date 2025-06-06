@@ -1,4 +1,4 @@
-package com.example.clearthefridge.entity;
+package com.example.clearthefridge.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

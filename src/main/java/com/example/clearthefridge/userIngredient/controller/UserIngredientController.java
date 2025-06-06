@@ -1,7 +1,9 @@
-package com.example.clearthefridge.controller;
+package com.example.clearthefridge.userIngredient.controller;
 
-import com.example.clearthefridge.dto.Ingredient.AddRequestDto;
-import com.example.clearthefridge.service.UserIngredientService;
+
+import com.example.clearthefridge.userIngredient.dto.AddRequestDto;
+import com.example.clearthefridge.userIngredient.dto.GetResponseDto;
+import com.example.clearthefridge.userIngredient.service.UserIngredientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,10 @@ public class UserIngredientController {
         return ResponseEntity.ok("재료 등록 성공");
     }
 
+    //사용자의 냉장고 속 재료 조회
+    @GetMapping("")
+    public ResponseEntity<GetResponseDto> addIngredient(@RequestParam Long userId) {
 
-
-
-
+        return ResponseEntity.ok(userIngredientService.getUserIngredients(userId));
+    }
 }
