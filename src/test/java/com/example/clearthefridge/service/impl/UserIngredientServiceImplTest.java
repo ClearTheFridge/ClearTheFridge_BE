@@ -1,16 +1,16 @@
 package com.example.clearthefridge.service.impl;
 
-import com.example.clearthefridge.ingredient.entity.Ingredient;
-import com.example.clearthefridge.user.entity.User;
-import com.example.clearthefridge.userIngredient.dto.AddRequestDto;
-import com.example.clearthefridge.userIngredient.dto.GetResponseDto;
-import com.example.clearthefridge.userIngredient.entity.UserIngredient;
+import com.example.clearthefridge.domain.ingredient.entity.Ingredient;
+import com.example.clearthefridge.domain.user.entity.User;
+import com.example.clearthefridge.domain.refrige.dto.AddRequestDto;
+import com.example.clearthefridge.domain.refrige.dto.GetResponseDto;
+import com.example.clearthefridge.domain.refrige.entity.UserIngredient;
 import com.example.clearthefridge.global.exception.CustomException;
 import com.example.clearthefridge.global.exception.ErrorCode;
-import com.example.clearthefridge.ingredient.repository.IngredientRepository;
-import com.example.clearthefridge.userIngredient.repository.UserIngredientRepository;
-import com.example.clearthefridge.user.UserRepository;
-import com.example.clearthefridge.userIngredient.service.UserIngredientService;
+import com.example.clearthefridge.domain.ingredient.repository.IngredientRepository;
+import com.example.clearthefridge.domain.refrige.repository.UserIngredientRepository;
+import com.example.clearthefridge.domain.user.repository.UserRepository;
+import com.example.clearthefridge.refrige.service.UserIngredientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
