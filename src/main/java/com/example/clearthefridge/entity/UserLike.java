@@ -1,27 +1,24 @@
-package com.example.clearthefridge.domain.recipe.entity;
+package com.example.clearthefridge.entity;
 
-import com.example.clearthefridge.domain.ingredient.entity.Ingredient;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "recipe_ingredients")
+@Table(name = "user_likes")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecipeIngredient {
+public class UserLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private Recipe recipe;
+    private User user;
 
     @ManyToOne
-    private Ingredient ingredient;
-
-    private String amount;
+    private Recipe recipe;
 }

@@ -1,8 +1,6 @@
-package com.example.clearthefridge.domain.recipe.entity;
+package com.example.clearthefridge.entity;
 
 
-import com.example.clearthefridge.domain.user.entity.User;
-import com.example.clearthefridge.domain.user.entity.UserLike;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

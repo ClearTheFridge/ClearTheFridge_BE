@@ -1,4 +1,4 @@
-package com.example.clearthefridge.domain.recipe.entity;
+package com.example.clearthefridge.entity;
 
 
 import jakarta.persistence.*;
