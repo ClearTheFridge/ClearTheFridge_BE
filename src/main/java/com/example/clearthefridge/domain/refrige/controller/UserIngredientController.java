@@ -2,11 +2,14 @@ package com.example.clearthefridge.domain.refrige.controller;
 
 
 import com.example.clearthefridge.domain.refrige.dto.AddRequestDto;
+import com.example.clearthefridge.domain.refrige.dto.ConsumeRequestDto;
 import com.example.clearthefridge.domain.refrige.dto.GetResponseDto;
 import com.example.clearthefridge.domain.refrige.service.UserIngredientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +28,15 @@ public class UserIngredientController {
     //사용자의 냉장고 속 재료 조회
     @GetMapping("")
     public ResponseEntity<GetResponseDto> addIngredient(@RequestParam Long userId) {
-
         return ResponseEntity.ok(userIngredientService.getUserIngredients(userId));
     }
+
+    @PatchMapping("")
+    public ResponseEntity<String> consumeIngredient(@RequestParam Long userId, @RequestBody List<ConsumeRequestDto> ingredients) {
+
+        userIngredientService.consumeIngredient(userId,ingredients);
+        return ResponseEntity.ok("재료 감소 성공");
+    }
+
+
 }

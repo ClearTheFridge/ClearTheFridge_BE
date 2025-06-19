@@ -1,6 +1,7 @@
 package com.example.clearthefridge.service.impl;
 
 import com.example.clearthefridge.domain.ingredient.entity.Ingredient;
+import com.example.clearthefridge.domain.refrige.dto.ConsumeRequestDto;
 import com.example.clearthefridge.domain.user.entity.User;
 import com.example.clearthefridge.domain.refrige.dto.AddRequestDto;
 import com.example.clearthefridge.domain.refrige.dto.GetResponseDto;
@@ -23,6 +24,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -61,7 +64,7 @@ class UserIngredientServiceImplTest {
 
         AddRequestDto.IngredientDto dto = AddRequestDto.IngredientDto.builder()
                 .name("토마토")
-                .amount("2")
+                .amount(2)
                 .unit("개")
                 .build();
         AddRequestDto request = AddRequestDto.builder()
@@ -85,7 +88,7 @@ class UserIngredientServiceImplTest {
 
         AddRequestDto.IngredientDto dto = AddRequestDto.IngredientDto.builder()
                 .name("토마토")
-                .amount("2")
+                .amount(2)
                 .unit("개")
                 .build();
         AddRequestDto request = AddRequestDto.builder()
@@ -106,7 +109,7 @@ class UserIngredientServiceImplTest {
         UserIngredient ui = userIngredients.get(0);
         assertThat(ui.getUser().getId()).isEqualTo(savedUser.getId());
         assertThat(ui.getIngredient().getId()).isEqualTo(ing.getId());
-        assertThat(ui.getAmount()).isEqualTo("2");
+        assertThat(ui.getAmount()).isEqualTo(2);
         assertThat(ui.getUnit()).isEqualTo("개");
         assertThat(ui.getCreatedAt()).isNotNull();
         assertThat(ui.getExpiryDate()).isNotNull();
@@ -123,12 +126,12 @@ class UserIngredientServiceImplTest {
 
         AddRequestDto.IngredientDto dto1 = AddRequestDto.IngredientDto.builder()
                 .name("양파")
-                .amount("3")
+                .amount(3)
                 .unit("개")
                 .build();
         AddRequestDto.IngredientDto dto2 = AddRequestDto.IngredientDto.builder()
                 .name("당근")
-                .amount("1")
+                .amount(1)
                 .unit("개")
                 .build();
         AddRequestDto request = AddRequestDto.builder()
@@ -148,7 +151,7 @@ class UserIngredientServiceImplTest {
                 .containsExactlyInAnyOrder("양파", "당근");
         assertThat(userIngredients)
                 .extracting(UserIngredient::getAmount)
-                .containsExactlyInAnyOrder("3", "1");
+                .containsExactlyInAnyOrder(3, 1);
         assertThat(userIngredients)
                 .extracting(UserIngredient::getUnit)
                 .containsExactlyInAnyOrder("개", "개");
@@ -187,7 +190,7 @@ class UserIngredientServiceImplTest {
         userIngredientRepository.save(UserIngredient.builder()
                 .user(savedUser)
                 .ingredient(ingredient)
-                .amount("2")
+                .amount(2)
                 .unit("개")
                 .createdAt(now.minusDays(1))
                 .expiryDate(now.plusDays(4))
@@ -201,9 +204,76 @@ class UserIngredientServiceImplTest {
 
         GetResponseDto.UserIngredientDto dto = list.get(0);
         assertThat(dto.getName()).isEqualTo("사과");
-        assertThat(dto.getAmount()).isEqualTo("2");
+        assertThat(dto.getAmount()).isEqualTo(2);
         assertThat(dto.getUnit()).isEqualTo("개");
         assertThat(dto.getCreatedAt()).isNotNull();
         assertThat(dto.getExpiryDate()).isNotNull();
+    }
+
+    @Test
+    @DisplayName("재료 차감 성공 테스트")
+    void consumeIngredient_success() {
+        // given
+        User user = userRepository.save(User.builder().username("tester").build());
+
+        Ingredient ingredient1 = ingredientRepository.save(Ingredient.builder().name("당근").build());
+        Ingredient ingredient2 = ingredientRepository.save(Ingredient.builder().name("양파").build());
+
+        UserIngredient userIng1 = userIngredientRepository.save(UserIngredient.builder()
+                .user(user)
+                .ingredient(ingredient1)
+                .amount(100)
+                .unit("g")
+                .expiryDate(LocalDateTime.now().plusDays(3))
+                .build());
+
+        UserIngredient userIng2 = userIngredientRepository.save(UserIngredient.builder()
+                .user(user)
+                .ingredient(ingredient2)
+                .amount(50)
+                .unit("g")
+                .expiryDate(LocalDateTime.now().plusDays(3))
+                .build());
+
+        List<ConsumeRequestDto> requestList = List.of(
+                new ConsumeRequestDto(ingredient1.getId(), 40),
+                new ConsumeRequestDto(ingredient2.getId(), 30)
+        );
+
+        // when
+        userIngredientService.consumeIngredient(user.getId(), requestList);
+
+        // then
+        UserIngredient updated1 = userIngredientRepository.findById(userIng1.getId()).orElseThrow();
+        UserIngredient updated2 = userIngredientRepository.findById(userIng2.getId()).orElseThrow();
+
+        assertEquals(60, updated1.getAmount());
+        assertEquals(20, updated2.getAmount());
+    }
+
+
+    @Test
+    @DisplayName("재료 차감 실패 (수량 부족) 테스트")
+    void consumeIngredient_fail() {
+        // given
+        User user = userRepository.save(User.builder().username("tester").build());
+        Ingredient ingredient = ingredientRepository.save(Ingredient.builder().name("감자").build());
+
+        UserIngredient userIngredient = userIngredientRepository.save(UserIngredient.builder()
+                .user(user)
+                .ingredient(ingredient)
+                .amount(10) // 수량 적게 설정
+                .unit("g")
+                .expiryDate(LocalDateTime.now().plusDays(2))
+                .build());
+
+        List<ConsumeRequestDto> request = List.of(
+                new ConsumeRequestDto(ingredient.getId(), 20)
+        );
+
+        // when & then
+        assertThrows(CustomException.class, () -> {
+            userIngredientService.consumeIngredient(user.getId(), request);
+        });
     }
 }

@@ -23,7 +23,9 @@ public enum ErrorCode {
     // Error code 500
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류가 발생했습니다."),
 
-    NOT_FOUNT_USER(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다.");
+    NOT_FOUNT_USER(HttpStatus.BAD_REQUEST, "존재하지 않는 회원입니다."),
+
+    NOT_ENOUGH_INGREDIENTS(HttpStatus.BAD_REQUEST, "보유한 재료가 충분하지 않습니다.");
 
     private final HttpStatus status;
     private final String message;
