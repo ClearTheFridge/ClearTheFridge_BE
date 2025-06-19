@@ -11,4 +11,6 @@ public interface UserIngredientRepository extends JpaRepository<UserIngredient, 
     List<UserIngredient> findByUser(User user);
 
     List<UserIngredient> findByUserId(Long userId);
+
+    List<UserIngredient>  findByUserIdAndIngredientIdIn(Long userId,List<Long> ids);
 }
