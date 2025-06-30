@@ -1,4 +1,5 @@
 package com.example.clearthefridge.domain.recipe.repository;
+//JPA 조회용 repo
 
-public class exam {
+public interface FindRecipeRepository {
 }
