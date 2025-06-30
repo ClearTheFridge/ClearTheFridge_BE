@@ -5,9 +5,12 @@ import com.example.clearthefridge.domain.user.entity.User;
 import com.example.clearthefridge.domain.user.entity.UserLike;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -15,6 +18,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Recipe {
 
     @Id
@@ -23,6 +27,7 @@ public class Recipe {
 
     private String recipeName;
     private String imageUrl;
+    private String recipeContext;
     private Double starAvg;
     private Integer likeCount;
 
@@ -37,4 +42,7 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe")
     private List<UserLike> likes;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 }
