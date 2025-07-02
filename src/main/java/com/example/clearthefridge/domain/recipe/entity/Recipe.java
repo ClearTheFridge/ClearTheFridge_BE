@@ -31,7 +31,8 @@ public class Recipe {
     private Double starAvg;
     private Integer likeCount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "recipe")
