@@ -32,7 +32,7 @@ public class AddRequestDto {
         @NotBlank(message = "이름은 필수 항목 입니다.")
         private String name;
 
-        private String amount;
+        private int amount;
 
         private String unit;
 

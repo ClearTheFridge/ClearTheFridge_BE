@@ -25,7 +25,7 @@ public class GetResponseDto {
     public static class UserIngredientDto {
         private Long id;
         private String name;
-        private String amount;
+        private int amount;
         private String unit;
         private LocalDateTime createdAt;
         private LocalDateTime expiryDate;
