@@ -50,7 +50,7 @@ class UserIngredientServiceImplTest {
         userRepository.deleteAll();
 
         savedUser = userRepository.save(User.builder()
-                .username("testUser")
+                .userName("testUser")
                 .build());
     }
 
@@ -65,7 +65,7 @@ class UserIngredientServiceImplTest {
                 .unit("개")
                 .build();
         AddRequestDto request = AddRequestDto.builder()
-                .userId(savedUser.getId())
+                .userId(savedUser.getUserId())
                 .ingredientList(Collections.singletonList(dto))
                 .build();
 
@@ -89,7 +89,7 @@ class UserIngredientServiceImplTest {
                 .unit("개")
                 .build();
         AddRequestDto request = AddRequestDto.builder()
-                .userId(savedUser.getId())
+                .userId(savedUser.getUserId())
                 .ingredientList(Collections.singletonList(dto))
                 .build();
 
@@ -104,7 +104,7 @@ class UserIngredientServiceImplTest {
         List<UserIngredient> userIngredients = userIngredientRepository.findAll();
         assertThat(userIngredients).hasSize(1);
         UserIngredient ui = userIngredients.get(0);
-        assertThat(ui.getUser().getId()).isEqualTo(savedUser.getId());
+        assertThat(ui.getUser().getUserId()).isEqualTo(savedUser.getUserId());
         assertThat(ui.getIngredient().getId()).isEqualTo(ing.getId());
         assertThat(ui.getAmount()).isEqualTo("2");
         assertThat(ui.getUnit()).isEqualTo("개");
@@ -132,7 +132,7 @@ class UserIngredientServiceImplTest {
                 .unit("개")
                 .build();
         AddRequestDto request = AddRequestDto.builder()
-                .userId(savedUser.getId())
+                .userId(savedUser.getUserId())
                 .ingredientList(List.of(dto1, dto2))
                 .build();
 
@@ -157,7 +157,7 @@ class UserIngredientServiceImplTest {
     @Test
     @DisplayName("존재하지 않는 사용자 조회 시 예외 발생")
     void getUserIngredients_nonExistentUser_throwsException() {
-        Long NotFoundUserId= savedUser.getId() + 1;
+        Long NotFoundUserId= savedUser.getUserId() + 1;
 
         assertThatThrownBy(() -> userIngredientService.getUserIngredients(NotFoundUserId))
                 .isInstanceOf(CustomException.class)
@@ -168,9 +168,9 @@ class UserIngredientServiceImplTest {
     @Test
     @DisplayName("사용자가 재료를 하나도 등록하지 않은 경우 빈 리스트 반환")
     void getUserIngredients_noIngredients_returnsEmptyList() {
-        GetResponseDto response = userIngredientService.getUserIngredients(savedUser.getId());
+        GetResponseDto response = userIngredientService.getUserIngredients(savedUser.getUserId());
 
-        assertThat(response.getUserId()).isEqualTo(savedUser.getId());
+        assertThat(response.getUserId()).isEqualTo(savedUser.getUserId());
         assertThat(response.getIngredientList()).isEmpty();
     }
 
@@ -193,9 +193,9 @@ class UserIngredientServiceImplTest {
                 .expiryDate(now.plusDays(4))
                 .build());
 
-        GetResponseDto response = userIngredientService.getUserIngredients(savedUser.getId());
+        GetResponseDto response = userIngredientService.getUserIngredients(savedUser.getUserId());
 
-        assertThat(response.getUserId()).isEqualTo(savedUser.getId());
+        assertThat(response.getUserId()).isEqualTo(savedUser.getUserId());
         List<GetResponseDto.UserIngredientDto> list = response.getIngredientList();
         assertThat(list).hasSize(1);
 

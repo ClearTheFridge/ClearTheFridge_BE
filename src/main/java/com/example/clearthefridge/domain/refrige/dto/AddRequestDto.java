@@ -1,7 +1,7 @@
-package com.example.clearthefridge.domain.recipe.refrige.dto;
+package com.example.clearthefridge.domain.refrige.dto;
 
 import com.example.clearthefridge.domain.ingredient.entity.Ingredient;
-import com.example.clearthefridge.domain.recipe.refrige.entity.UserIngredient;
+import com.example.clearthefridge.domain.refrige.entity.UserIngredient;
 import com.example.clearthefridge.domain.user.entity.User;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

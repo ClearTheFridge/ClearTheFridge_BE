@@ -1,6 +1,6 @@
-package com.example.clearthefridge.domain.recipe.refrige.dto;
+package com.example.clearthefridge.domain.refrige.dto;
 
-import com.example.clearthefridge.domain.recipe.refrige.entity.UserIngredient;
+import com.example.clearthefridge.domain.refrige.entity.UserIngredient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;

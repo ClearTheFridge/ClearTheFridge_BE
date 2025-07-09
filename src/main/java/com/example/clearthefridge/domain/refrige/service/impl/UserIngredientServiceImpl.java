@@ -1,17 +1,17 @@
-package com.example.clearthefridge.domain.recipe.refrige.service.impl;
+package com.example.clearthefridge.domain.refrige.service.impl;
 
 
-import com.example.clearthefridge.domain.recipe.refrige.dto.AddRequestDto;
-import com.example.clearthefridge.domain.recipe.refrige.dto.GetResponseDto;
-import com.example.clearthefridge.domain.recipe.refrige.entity.UserIngredient;
-import com.example.clearthefridge.domain.recipe.refrige.service.UserIngredientService;
+import com.example.clearthefridge.domain.refrige.dto.AddRequestDto;
+import com.example.clearthefridge.domain.refrige.dto.GetResponseDto;
+import com.example.clearthefridge.domain.refrige.entity.UserIngredient;
+import com.example.clearthefridge.domain.refrige.service.UserIngredientService;
 import com.example.clearthefridge.domain.user.entity.User;
 import com.example.clearthefridge.global.exception.CustomException;
 import com.example.clearthefridge.global.exception.ErrorCode;
 import com.example.clearthefridge.domain.ingredient.repository.IngredientRepository;
 import com.example.clearthefridge.domain.user.repository.UserRepository;
 import com.example.clearthefridge.domain.ingredient.entity.Ingredient;
-import com.example.clearthefridge.domain.recipe.refrige.repository.UserIngredientRepository;
+import com.example.clearthefridge.domain.refrige.repository.UserIngredientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

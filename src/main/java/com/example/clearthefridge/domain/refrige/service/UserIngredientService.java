@@ -1,8 +1,8 @@
-package com.example.clearthefridge.domain.recipe.refrige.service;
+package com.example.clearthefridge.domain.refrige.service;
 
 
-import com.example.clearthefridge.domain.recipe.refrige.dto.AddRequestDto;
-import com.example.clearthefridge.domain.recipe.refrige.dto.GetResponseDto;
+import com.example.clearthefridge.domain.refrige.dto.AddRequestDto;
+import com.example.clearthefridge.domain.refrige.dto.GetResponseDto;
 
 public interface UserIngredientService {
 

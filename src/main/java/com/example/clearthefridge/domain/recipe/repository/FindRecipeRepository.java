@@ -13,6 +13,8 @@ public interface FindRecipeRepository extends JpaRepository {
     //키워드를 포함하고 있는 제목 추출
     List<Recipe> findByrecipeNameContaining(String keyword);
 
+
+
     //사용자 이름으로 레시피 추출
     List<Recipe> findByUser_username(String username);
 

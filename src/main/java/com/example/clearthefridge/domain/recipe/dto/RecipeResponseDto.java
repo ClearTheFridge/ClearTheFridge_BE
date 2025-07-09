@@ -15,16 +15,23 @@ public class RecipeResponseDto {
     @NoArgsConstructor
     @Getter
     @Builder
-    public static class RecipeSummary{
+    public static class RecipeSummaryDto {
         private Long recipeId;
         private String recipeName;
 
 
-        public static RecipeSummary fromEntity(Recipe recipe) {
-            return RecipeSummary.builder()
+        public static RecipeSummaryDto fromEntity(Recipe recipe) {
+            return RecipeSummaryDto.builder()
                     .recipeId(recipe.getRecipeId())
                     .recipeName(recipe.getRecipeName())
                     .build();
+        }
+
+        // List<Recipe> → List<RecipeSummaryDto> 매핑
+        public static List<RecipeSummaryDto> fromEntityList(List<Recipe> recipes) {
+            return recipes.stream()
+                    .map(RecipeSummaryDto::fromEntity)
+                    .collect(Collectors.toList());
         }
     }
 
