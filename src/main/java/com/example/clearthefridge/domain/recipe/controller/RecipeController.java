@@ -1,9 +1,8 @@
 package com.example.clearthefridge.domain.recipe.controller;
 
 import com.example.clearthefridge.domain.recipe.dto.RecipeRequestDto;
-import com.example.clearthefridge.domain.recipe.dto.RecipeResponseDto.RecipeSummaryDto;
 import com.example.clearthefridge.domain.recipe.dto.RecipeResponseDto.RecipeDetailDto;
-import com.example.clearthefridge.domain.recipe.entity.Recipe;
+import com.example.clearthefridge.domain.recipe.dto.RecipeResponseDto.RecipeSummaryDto;
 import com.example.clearthefridge.domain.recipe.service.RecipeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -62,12 +61,12 @@ public class RecipeController {
     }
     //재료1개로 검색
     @GetMapping("/search/ingredient")
-    public ResponseEntity<List<Recipe>> searchByIngredient(@RequestParam String ingredientName) {
+    public ResponseEntity<List<RecipeSummaryDto>> searchByIngredient(@RequestParam String ingredientName) {
         return ResponseEntity.ok(recipeService.searchByIngredient(ingredientName));
     }
     //레시피 등록유저 이름으로 검색
     @GetMapping("/search/user")
-    public ResponseEntity<List<Recipe>> searchByUser(@RequestParam String username) {
+    public ResponseEntity<List<RecipeSummaryDto>> searchByUser(@RequestParam String username) {
         return ResponseEntity.ok(recipeService.searchByUsername(username));
     }
 }
