@@ -57,7 +57,7 @@ public class RecipeController {
     //제목으로 검색
     @GetMapping("/search/title")
     public ResponseEntity<List<RecipeSummaryDto>> searchByTitle(@RequestParam String title) {
-        return ResponseEntity.ok(recipeService.searchByTitle(title));ㅜ
+        return ResponseEntity.ok(recipeService.searchByTitle(title));
     }
     //재료1개로 검색
     @GetMapping("/search/ingredient")
