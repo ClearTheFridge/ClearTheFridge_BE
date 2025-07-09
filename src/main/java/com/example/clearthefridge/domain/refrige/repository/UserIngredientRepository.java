@@ -1,7 +1,7 @@
-package com.example.clearthefridge.domain.refrige.repository;
+package com.example.clearthefridge.domain.recipe.refrige.repository;
 
+import com.example.clearthefridge.domain.recipe.refrige.entity.UserIngredient;
 import com.example.clearthefridge.domain.user.entity.User;
-import com.example.clearthefridge.domain.refrige.entity.UserIngredient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

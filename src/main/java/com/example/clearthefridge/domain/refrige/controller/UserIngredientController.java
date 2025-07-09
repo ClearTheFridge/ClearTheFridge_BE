@@ -1,9 +1,9 @@
-package com.example.clearthefridge.domain.refrige.controller;
+package com.example.clearthefridge.domain.recipe.refrige.controller;
 
 
-import com.example.clearthefridge.domain.refrige.dto.AddRequestDto;
-import com.example.clearthefridge.domain.refrige.dto.GetResponseDto;
-import com.example.clearthefridge.domain.refrige.service.UserIngredientService;
+import com.example.clearthefridge.domain.recipe.refrige.dto.AddRequestDto;
+import com.example.clearthefridge.domain.recipe.refrige.dto.GetResponseDto;
+import com.example.clearthefridge.domain.recipe.refrige.service.UserIngredientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,10 @@
 package com.example.clearthefridge.domain.recipe.controller;
 
+import com.example.clearthefridge.domain.recipe.dto.RecipeRequestDto;
+import com.example.clearthefridge.domain.recipe.dto.RecipeResponseDto;
 import com.example.clearthefridge.domain.recipe.entity.Recipe;
 import com.example.clearthefridge.domain.recipe.service.RecipeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,40 +20,45 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/recipes")
+@RequestMapping("/api/v1/recipes")
 @RequiredArgsConstructor
 public class RecipeController {
 
     private final RecipeService recipeService;
 
+    //레시피 등록
     @PostMapping
-    public ResponseEntity<Long> save(@RequestBody Recipe recipe) {
-        Long id = recipeService.saveRecipe(recipe);
-        return ResponseEntity.ok(id);
+    public ResponseEntity<Long> save(@RequestBody @Valid RecipeRequestDto recipeDto) {
+        Long recipeId = recipeService.saveRecipe(recipeDto);
+        return ResponseEntity.ok(recipeId);
     }
-
+    //레시피 수정
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> update(@PathVariable Long id, @RequestBody Recipe recipe) {
-        recipe.setId(id);
-        return ResponseEntity.ok(recipeService.updateRecipe(recipe));
+    public ResponseEntity<RecipeResponseDto> updateRecipe(
+            @PathVariable Long id,
+            @RequestBody RecipeRequestDto dto) {
+        // DTO에 id 필드가 없다면, setter를 추가하거나 별도로 처리해주세요.
+        dto.setRecipeId(id);
+        Recipe updated = recipeService.updateRecipe(dto);
+        return ResponseEntity.ok(new RecipeResponseDto(updated));
     }
-
+    //레시피 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         recipeService.deleteRecipe(id);
         return ResponseEntity.noContent().build();
     }
-
+    //제목으로 검색
     @GetMapping("/search/title")
     public ResponseEntity<List<Recipe>> searchByTitle(@RequestParam String title) {
         return ResponseEntity.ok(recipeService.searchByTitle(title));
     }
-
+    //재료1개로 검색
     @GetMapping("/search/ingredient")
     public ResponseEntity<List<Recipe>> searchByIngredient(@RequestParam String ingredientName) {
         return ResponseEntity.ok(recipeService.searchByIngredient(ingredientName));
     }
-
+    //레시피 등록유저 이름으로 검색
     @GetMapping("/search/user")
     public ResponseEntity<List<Recipe>> searchByUser(@RequestParam String username) {
         return ResponseEntity.ok(recipeService.searchByUsername(username));

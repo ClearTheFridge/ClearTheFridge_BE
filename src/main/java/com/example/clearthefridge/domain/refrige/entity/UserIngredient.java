@@ -1,4 +1,4 @@
-package com.example.clearthefridge.domain.refrige.entity;
+package com.example.clearthefridge.domain.recipe.refrige.entity;
 import com.example.clearthefridge.domain.ingredient.entity.Ingredient;
 import com.example.clearthefridge.domain.user.entity.User;
 import jakarta.persistence.*;
