@@ -1,6 +1,8 @@
 package com.example.clearthefridge.domain.refrige.service.impl;
 
 
+
+import com.example.clearthefridge.domain.refrige.dto.ConsumeRequestDto;
 import com.example.clearthefridge.domain.refrige.dto.AddRequestDto;
 import com.example.clearthefridge.domain.refrige.dto.GetResponseDto;
 import com.example.clearthefridge.domain.refrige.entity.UserIngredient;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -68,4 +71,32 @@ public class UserIngredientServiceImpl implements UserIngredientService {
                 .ingredientList(ingredientDtos)
                 .build();
     }
+
+    @Transactional
+    @Override
+    public void consumeIngredient(Long userId, List<ConsumeRequestDto> ingredients) {
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUNT_USER));
+
+        List<Long> IngredientIds = ingredients.stream()
+                .map(ConsumeRequestDto::getIngredientId)
+                .toList();
+
+        List<UserIngredient> userIngredients = userIngredientRepository.findAllById(IngredientIds);
+
+        Map<Long, Integer> requestMap = ingredients.stream()
+                .collect(Collectors.toMap(
+                        ConsumeRequestDto::getIngredientId,
+                        ConsumeRequestDto::getAmount
+                ));
+
+        for (UserIngredient userIngredient : userIngredients) {
+            Integer consumeAmount = requestMap.get(userIngredient.getIngredient().getId());
+            if (consumeAmount != null) {
+                userIngredient.decreaseAmount(consumeAmount); // 도메인 메서드 사용
+            }
+        }
+    }
+
+
 }
