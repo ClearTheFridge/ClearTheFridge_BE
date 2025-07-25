@@ -84,7 +84,7 @@ public class RecipeResponseDto {
                             .reviewId(r.getId())
                             //댓글 개수는 제외
                             .comment(r.getContent())
-                            .userId(r.getUser().getUserId())
+                            .userId(r.getUser().getId())
                             .userName(r.getUser().getUserName())
                             .build())
 

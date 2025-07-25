@@ -69,7 +69,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<RecipeSummaryDto> searchByUsername(String userName) {
-        List<Recipe> recipes = findRecipeRepo.findByIngredientName(userName);
+        List<Recipe> recipes = findRecipeRepo.findByUser_userName(userName);
         return RecipeSummaryDto.fromEntityList(recipes);
     }
 }
